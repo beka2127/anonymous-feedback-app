@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Feedback Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <h1 class="logo">Anonymous Feedback Hub</h1>
+    </div>
+
+    <main>
+        <section id="commentSection" class="card fade-in">
+            <h2>Share Your whistleblow</h2>
+            <form id="commentForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="commentText">Your Anonymous whistleblow:</label>
+                    <textarea id="commentText" placeholder="Type your whistleblow here... It will be seen only by the admin, and your identity will remain private." rows="6"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="attachment">Add an Attachment (Optional):</label>
+                    <input type="file" id="attachment" name="attachment" accept="image/*,.pdf,.doc,.docx,.txt">
+                    <small>Max 5MB. Images (JPG, PNG, GIF), PDFs, Word Docs, or Text files allowed.</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Comment Anonymously</button>
+                <p id="message" class="form-message"></p>
+            </form>
+            <div class="admin-access-area">
+                <p>Are you the admin?</p>
+                <button id="adminLoginBtn" class="btn btn-secondary">Admin Login</button>
+            </div>
+        </section>
+
+        <section id="adminLoginSection" class="card fade-in" style="display: none;">
+            <h2>Admin Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminPassword">Enter Admin Password:</label>
+                    <input type="password" id="adminPassword" placeholder="Admin Password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <p id="loginMessage" class="form-message error"></p>
+            </form>
+            <button id="backToCommentsBtn" class="btn btn-outline">Back to Feedback Form</button>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Anonymous Feedback. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

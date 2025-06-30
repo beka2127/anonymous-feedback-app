@@ -1,0 +1,361 @@
+/* Universal Box-Sizing for easier layout */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    /* Color Palette */
+    --color-primary: #4CAF50; /* Green */
+    --color-primary-dark: #45a049;
+    --color-secondary: #007bff; /* Blue */
+    --color-secondary-dark: #0056b3;
+    --color-danger: #dc3545; /* Red */
+    --color-danger-dark: #c82333;
+    --color-text-dark: #333;
+    --color-text-light: #666;
+    --color-background: #f8f9fa;
+    --color-card-background: #ffffff;
+    --color-border: #e0e0e0;
+    --color-shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Using a nicer font */
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background);
+    color: var(--color-text-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+}
+
+.header {
+    width: 100%;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.logo {
+    margin: 0;
+    font-weight: 600;
+    font-size: 2.2em;
+}
+
+main {
+    flex-grow: 1; /* Allows main content to take up available space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.card {
+    background-color: var(--color-card-background);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px var(--color-shadow);
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px; /* Ensures space around cards */
+}
+
+h2 {
+    color: var(--color-primary);
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 1.8em;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    text-align: left; /* Align labels */
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 400;
+    color: var(--color-text-light);
+    font-size: 0.95em;
+}
+
+textarea,
+input[type="password"],
+input[type="file"] { /* Added file input styling */
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-text-dark);
+    background-color: var(--color-background);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+textarea:focus,
+input[type="password"]:focus,
+input[type="file"]:focus { /* Added file input styling */
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2); /* Light green glow */
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+input[type="file"] {
+    padding: 10px; /* Adjust padding for file input */
+}
+
+small {
+    display: block;
+    margin-top: 5px;
+    color: var(--color-text-light);
+    font-size: 0.85em;
+    text-align: left;
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    margin-top: 10px; /* Space above buttons */
+    box-shadow: 0 2px 5px var(--color-shadow);
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--color-shadow);
+}
+
+.btn-secondary {
+    background-color: var(--color-secondary);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-secondary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--color-shadow);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--color-text-light);
+    border: 1px solid var(--color-border);
+}
+
+.btn-outline:hover {
+    background-color: var(--color-background);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--color-shadow);
+}
+
+/* NEW: Small delete button style */
+.btn-danger {
+    background-color: var(--color-danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: var(--color-danger-dark);
+}
+
+.btn-small {
+    padding: 6px 12px;
+    font-size: 0.9em;
+    margin: 5px 0; /* Adjust margin for small buttons */
+}
+
+
+.form-message {
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 1em;
+    min-height: 20px; /* To prevent layout shift */
+}
+
+.form-message.success {
+    color: var(--color-primary);
+}
+
+.form-message.error {
+    color: var(--color-danger);
+}
+
+.admin-access-area {
+    margin-top: 40px;
+    padding-top: 25px;
+    border-top: 1px solid var(--color-border);
+}
+
+.admin-access-area p {
+    color: var(--color-text-light);
+    margin-bottom: 15px;
+}
+
+/* Admin Comments View Specific Styles (Generated HTML) */
+.admin-comments-container {
+    background-color: var(--color-card-background);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px var(--color-shadow);
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto; /* Center the container */
+}
+
+.admin-comments-container h1 {
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+}
+
+.admin-comments-container p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--color-text-light);
+}
+
+.comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comment-item {
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+    position: relative; /* For delete button positioning */
+}
+
+.comment-item:hover {
+    transform: translateY(-3px);
+}
+
+.comment-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    color: var(--color-text-dark);
+}
+
+.comment-timestamp {
+    font-size: 0.85em;
+    color: var(--color-text-light);
+    text-align: right;
+}
+
+.no-comments {
+    text-align: center;
+    color: var(--color-text-light);
+    font-style: italic;
+    padding: 20px;
+}
+
+.admin-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--color-border);
+}
+
+/* NEW: Styles for attachments in admin view */
+.comment-attachment {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--color-border);
+    text-align: center;
+}
+
+.comment-attachment img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+    max-height: 200px; /* Limit image height in admin view */
+    object-fit: contain;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.comment-attachment a {
+    display: inline-block;
+    background-color: var(--color-secondary);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9em;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.comment-attachment a:hover {
+    background-color: var(--color-secondary-dark);
+}
+
+/* NEW: Delete button form styling */
+.delete-form {
+    display: flex;
+    justify-content: flex-end; /* Push delete button to the right */
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dotted var(--color-border);
+}
+
+
+/* Footer */
+.footer {
+    width: 100%;
+    background-color: var(--color-text-dark);
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: auto; /* Pushes footer to the bottom */
+    font-size: 0.9em;
+}
+
+/* Fade-in animation for sections */
+.fade-in {
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
