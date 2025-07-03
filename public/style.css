@@ -2,13 +2,13 @@
 *, *::before, *::after {
     box-sizing: border-box;
 }
-
+     
 :root {
     /* Color Palette */
     --color-primary: #4CAF50; /* Green */
     --color-primary-dark: #45a049;
-    --color-secondary: #007bff; /* Blue */
-    --color-secondary-dark: #0056b3;
+    --color-secondary: #364e8b; /* Blue */
+    --color-secondary-dark: #3b5f95;
     --color-danger: #dc3545; /* Red */
     --color-danger-dark: #c82333;
     --color-text-dark: #333;
@@ -128,6 +128,7 @@ small {
 .btn {
     padding: 12px 25px;
     border: none;
+    color:#ffffff;
     border-radius: 8px;
     font-size: 1.1em;
     font-weight: 600;
