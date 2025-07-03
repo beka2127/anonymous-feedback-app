@@ -11,9 +11,8 @@ const PORT = process.env.PORT || 3000;
 
 // --- CONFIGURATION ---
 // IMPORTANT: CHANGE THIS TO YOUR OWN STRONG, SECRET PASSWORD!
-const ADMIN_PASSWORD = 'password'; // <--- CHANGE THIS!!!
-// IMPORTANT: Change this to a very long, random string for production
-const SESSION_SECRET = 'password'; // <--- CHANGE THIS!!!
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; // This will get the value from Render's environment
+const SESSION_SECRET = process.env.SESSION_SECRET; // This will get the value from Render's environment
 // --- END CONFIGURATION ---
 
 // Ensure 'uploads' directory exists
