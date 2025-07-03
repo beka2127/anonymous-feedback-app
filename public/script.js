@@ -6,6 +6,7 @@ function setFormMessage(elementId, message, type) {
     messageElement.className = 'form-message ' + type;
 }
 
+
 // Comment form submission
 document.getElementById('commentForm').addEventListener('submit', async function(event) {
     event.preventDefault();
@@ -100,4 +101,26 @@ loginForm.addEventListener('submit', async function(event) {
         console.error('Login network error:', error);
         setFormMessage('loginMessage', 'Could not connect to the server for login.', 'error');
     }
+});
+document.getElementById("langToggle").addEventListener("click", function () {
+    const isAmharic = this.innerText === "አማርኛ";
+    this.innerText = isAmharic ? "English" : "አማርኛ";
+
+    document.querySelector(".logo").innerText = isAmharic ? "ሚስጥራዊ የጥቆማ መስጫ" : "Anonymous whistleblowing hub";
+    document.querySelector("#commentSection h2").innerText = isAmharic ? "የጥቆማ መስጫ" : "Share Your whistleblow";
+    document.querySelector("label[for='commentText']").innerText = isAmharic ? "ጥቆማዎን ያጋሩ" : "Your whistleblow:";
+    document.getElementById("commentText").placeholder = isAmharic ?
+        "ጥቆማዎን እዚህ ይጻፉ... ለአስተዳዳሪ ብቻ ይታያል፣ ጥቆማዎ እና ማንነትዎ በምስጢር ይቆያል።" :
+        "Type your whistleblow here... It will be seen only by the admin, and your identity will remain private.";
+    document.querySelector("label[for='attachment']").innerText = isAmharic ? "ፋይል ያካትቱ (አማራጭ):" : "Add an Attachment (Optional):";
+    document.querySelector("small").innerText = isAmharic ? "ከፍተኛ 6MB። ምስሎች (JPG, PNG, GIF), PDF, Word ወይም የጽሑፍ ፋይሎች ይፈቀዳሉ።" :
+        "Max 6MB. Images (JPG, PNG, GIF), PDFs, Word Docs, or Text files allowed.";
+    document.querySelector("#commentForm button").innerText = isAmharic ? "በሚስጥር ይላኩ" : "Submit Comment Anonymously";
+    document.querySelector(".admin-access-area p").innerText = isAmharic ? "አንተ አስተዳዳሪ ነህ?" : "Are you the admin?";
+    document.getElementById("adminLoginBtn").innerText = isAmharic ? "ወደ አስተዳዳሪ ይግቡ" : "Admin Login";
+    document.querySelector("#adminLoginSection h2").innerText = isAmharic ? "የአስተዳዳሪ ግባ" : "Admin Login";
+    document.querySelector("label[for='adminPassword']").innerText = isAmharic ? "የአስተዳዳሪ የምስጢር ቃል ያስገቡ፡" : "Enter Admin Password:";
+    document.querySelector("#loginForm button").innerText = isAmharic ? "ግባ" : "Login";
+    document.getElementById("backToCommentsBtn").innerText = isAmharic ? "ወደ ቅድመ ቅጽ ተመለስ" : "Back to Feedback Form";
+    document.querySelector(".footer p").innerText = isAmharic ? "© 2025 የማስታወቂያ መድረክ። መብት የተጠበቀ." : "© 2025 Anonymous Feedback. All rights reserved.";
 });
