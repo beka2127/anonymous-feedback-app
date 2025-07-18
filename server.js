@@ -9,34 +9,33 @@ const multer = require('multer');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// --- CONFIGURATION ---
-// IMPORTANT: CHANGE THIS TO YOUR OWN STRONG, SECRET PASSWORD!
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; // This will get the value from Render's environment
-const SESSION_SECRET = process.env.SESSION_SECRET; // This will get the value from Render's environment
-// --- END CONFIGURATION ---
 
-// Ensure 'uploads' directory exists
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; 
+const SESSION_SECRET = process.env.SESSION_SECRET; 
+
+
+
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir);
     console.log(`Created uploads directory at: ${uploadsDir}`);
 }
 
-// Multer setup for file uploads
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, uploadsDir); // Files will be saved in the 'uploads' directory
+        cb(null, uploadsDir); 
     },
     filename: function (req, file, cb) {
-        // Create a unique filename for the uploaded file using timestamp + original extension
+        
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
 });
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB file size limit
+    limits: { fileSize: 5 * 1024 * 1024 },
     fileFilter: function (req, file, cb) {
-        // Allowed file types: images, pdf, doc, docx, txt
+        
         const filetypes = /jpeg|jpg|png|gif|pdf|doc|docx|txt/;
         const mimetype = filetypes.test(file.mimetype);
         const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
@@ -46,36 +45,36 @@ const upload = multer({
         }
         cb(new Error('Error: File upload only supports images (jpeg/jpg/png/gif), PDFs, Docs, or Text files!'));
     }
-}).single('attachment'); // 'attachment' is the `name` attribute of the file input field in index.html
+}).single('attachment'); 
 
-// Middleware to serve static files (HTML, CSS, JS)
+
 app.use(express.static(path.join(__dirname, 'public')));
-// Serve uploaded files directly via the /uploads URL path
+
 app.use('/uploads', express.static(uploadsDir));
-// To parse JSON bodies from incoming requests (for login form)
+
 app.use(bodyParser.json());
-// To parse URL-encoded bodies (for delete form submission)
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Session middleware setup
+
 app.use(session({
-    secret: SESSION_SECRET, // Used to sign the session ID cookie
-    resave: false, // Don't save session if unmodified
-    saveUninitialized: false, // Don't create session until something stored
+    secret: SESSION_SECRET, 
+    resave: false,
+    saveUninitialized: false, 
     cookie: {
-        secure: false, // Set to true if using HTTPS (recommended for production)
-        maxAge: 3600000 // 1 hour (in milliseconds)
+        secure: false, 
+        maxAge: 3600000
     }
 }));
 
-// Set up SQLite database
+
 const db = new sqlite3.Database('./comments.db', (err) => {
     if (err) {
         console.error('Error opening database:', err.message);
     } else {
         console.log('Connected to the SQLite database.');
-        // Create comments table if it doesn't exist
-        // NEW: Added `attachment_path` column to store file location
+      
+        
         db.run(`CREATE TABLE IF NOT EXISTS comments (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             comment_text TEXT,
@@ -91,12 +90,12 @@ const db = new sqlite3.Database('./comments.db', (err) => {
     }
 });
 
-// Middleware to check if admin is authenticated
+
 function isAuthenticated(req, res, next) {
     if (req.session.isAdmin) {
-        next(); // Admin is logged in, continue to the next middleware/route handler
+        next(); 
     } else {
-        // If not logged in, redirect them to a simple access denied page
+       
         res.status(401).send(`
             <!DOCTYPE html>
             <html lang="en">
@@ -127,7 +126,7 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-// Endpoint to submit anonymous comments (NOW HANDLES ATTACHMENTS)
+
 app.post('/submit-comment', (req, res) => {
     upload(req, res, function (err) {
         if (err) {
@@ -136,7 +135,7 @@ app.post('/submit-comment', (req, res) => {
         }
 
         const commentText = req.body.comment;
-        const attachmentPath = req.file ? `/uploads/${req.file.filename}` : null; // Store relative URL path
+        const attachmentPath = req.file ? `/uploads/${req.file.filename}` : null; 
 
         if (!commentText.trim() && !attachmentPath) {
             if (req.file) {
@@ -162,7 +161,7 @@ app.post('/submit-comment', (req, res) => {
     });
 });
 
-// Admin Login Endpoint
+
 app.post('/admin-login', (req, res) => {
     const { password } = req.body;
 
@@ -174,7 +173,7 @@ app.post('/admin-login', (req, res) => {
     }
 });
 
-// Admin Logout Endpoint
+
 app.get('/admin-logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
@@ -185,7 +184,7 @@ app.get('/admin-logout', (req, res) => {
     });
 });
 
-// NEW: Admin Delete Comment Endpoint (Protected)
+
 app.post('/delete-comment', isAuthenticated, (req, res) => {
     const commentId = req.body.id;
 
@@ -224,7 +223,7 @@ app.post('/delete-comment', isAuthenticated, (req, res) => {
     });
 });
 
-// Admin viewing endpoint (Displays attachments and has DELETE buttons)
+
 app.get('/admin-view-comments', isAuthenticated, (req, res) => {
     db.all('SELECT id, comment_text, attachment_path, timestamp FROM comments ORDER BY timestamp DESC', [], (err, rows) => {
         if (err) {
@@ -304,7 +303,7 @@ app.get('/admin-view-comments', isAuthenticated, (req, res) => {
 });
 
 
-// Start the server
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
     console.log(`Anonymous feedback form: \x1b[36mhttp://localhost:${PORT}/\x1b[0m`);
@@ -314,7 +313,7 @@ app.listen(PORT, () => {
     console.log(`\x1b[33m!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\x1b[0m`);
 });
 
-// Close database connection when Node.js app exits
+
 process.on('SIGINT', () => {
     db.close((err) => {
         if (err) {
